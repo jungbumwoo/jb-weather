@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Platform, Text, View, StyleSheet } from "react-native";
-import Loading from "./Loading";
+
 import * as Location from 'expo-location';
+import axios from "axios";
+
+import Loading from "./Loading";
+
+
 
 const API_KEY = "";
 
@@ -19,8 +24,30 @@ export default function App() {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
+     
     })();
   }, []);
+
+  useEffect(() => {
+    if (location) {
+      let lat = location.coords.latitude;
+      let lon = location.coords.longitude;
+      (async () => {
+        let resultAxios = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`)
+          .then(function (response) {
+            const { data : { weather }} = response;
+            
+            console.log("main weather!!:");
+            console.log(response.data.weather.[0].main);
+          })
+          .catch(function (error) {
+            console.log("OMG error at axios");
+            console.log(error);
+          })
+  
+      })();
+    }
+  }, [location]);
 
   let text = 'Waiting..';
   if (errorMsg) {
