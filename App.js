@@ -5,54 +5,54 @@ import * as Location from 'expo-location';
 import axios from "axios";
 
 import getEnvVars from "./environment.js"; // .gitignore
-const { apiUrl } = getEnvVars();
+import Loading from './Loading.js';
+const { apiUrl } = getEnvVars(); // .gitignore
 /*
 import Loading from "./Loading";
 */
 export default function App() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [mainWeather, setMainWeather] = useState(null);
-  const [results, setResults] = useState(null);
+  const [mainWeather, setMainWeather] = useState("");
   const [lat, setLat] = useState("");
   const [lon, setLon] = useState("");
 
   useEffect(() => {
     (async () => {
-      console.log(" ---------------  * first useEffect() * -------------")
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
+      try {
+        console.log("* first useEffect() *")
+        let { status } = await Location.requestPermissionsAsync();
+        if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          return;
+        }
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
+        setLat(location.coords.latitude);
+        setLon(location.coords.longitude);
+      } catch(err) {
+        console.log(err);
       }
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      setLat(location.coords.latitude);
-      setLon(location.coords.longitude);
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
-      console.log(" ---------------  * second useEffect() * -------------");
-      let resultAxios = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiUrl}`)
-        .then(function (response) {
-          console.log("response");
-          console.log(response);
-          const { data : { weather }} = response;
-          console.log("main weather!!:");
-          console.log(response.data.weather.[0].main);
-          setMainWeather(response.data.weather.[0].main);
-        })
-        .catch(function (error) {
-          console.log("OMG error at axios");
-          console.log(error);
-        })
+      try {
+        console.log("*second useEffect()*");
+      let { data: { weather }} = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiUrl}&units=metric`)
+      let getWeather = "";
+      getWeather = weather.[0].main
+      setMainWeather(getWeather);
+      } catch(error) {
+        console.log(error);
+      }
     })();
+    
   }, [location]);
 
   /*  */
-
+  /*
   let text = 'Waiting..';
   if (errorMsg) {
     text = errorMsg;
@@ -60,15 +60,23 @@ export default function App() {
     text = JSON.stringify(location);
   }
   
-  let _mainWeather = [];
-  _mainWeather = mainWeather;
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.paragraph}>{text}</Text>
-      <Text style={styles.paragraph}>{_mainWeather}</Text>
-    </View>
-  );
+  let _mainWeather = "";
+  _mainWeather = mainWeather;
+  console.log("mainWeather");
+  console.log(_mainWeather);
+  */
+  if (mainWeather == undefined) {
+    return (
+      <Loading />
+    )
+  } else {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.paragraph}>{mainWeather}</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -85,3 +93,28 @@ const styles = StyleSheet.create({
   }
 })
 
+/*
+useEffect(() => {
+    (async () => {
+      try {
+        console.log("*second useEffect()*");
+      let resultAxios = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiUrl}&units=metric`)
+        .then(function (response) {
+          console.log("response");
+          console.log(response);
+          const { data : { weather }} = response;
+          console.log("main weather!!:");
+          console.log(response.data.weather.[0].main);
+        })
+        .catch(function (error) {
+          console.log("OMG error at axios");
+          console.log(error);
+        })
+        setMainWeather(response.data.weather.[0].main);
+      } catch(error) {
+        console.log(error);
+      }
+    })();
+    
+  }, [location]);
+*/
