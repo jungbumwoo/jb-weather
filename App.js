@@ -6,19 +6,20 @@ import axios from "axios";
 
 import getEnvVars from "./environment.js"; // .gitignore
 const { apiUrl } = getEnvVars();
-
 /*
 import Loading from "./Loading";
 */
-
 export default function App() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [mainWeather, setMainWeather] = useState(null);
   const [results, setResults] = useState(null);
+  const [lat, setLat] = useState("");
+  const [lon, setLon] = useState("");
 
   useEffect(() => {
     (async () => {
+      console.log(" ---------------  * first useEffect() * -------------")
       let { status } = await Location.requestPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
@@ -26,33 +27,28 @@ export default function App() {
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
+      setLat(location.coords.latitude);
+      setLon(location.coords.longitude);
     })();
   }, []);
 
   useEffect(() => {
-    if (location) {
-      let lat = location.coords.latitude;
-      let lon = location.coords.longitude;
-      (async () => {
-        let resultAxios = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiUrl}`)
-          .then(function (response) {
-            const { data : { weather }} = response;
-            console.log("main weather!!:");
-            console.log(response.data.weather.[0].main);
-          })
-          .catch(function (error) {
-            console.log("OMG error at axios");
-            console.log(error);
-          })
-      })();
-    }
-    let getWeather = [];
-    if (results) {
-      getWeather = response.data.weather.[0].main;
-    } else {
-      console.log("response is not exist");
-    }
-    setMainWeather(getWeather);
+    (async () => {
+      console.log(" ---------------  * second useEffect() * -------------");
+      let resultAxios = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiUrl}`)
+        .then(function (response) {
+          console.log("response");
+          console.log(response);
+          const { data : { weather }} = response;
+          console.log("main weather!!:");
+          console.log(response.data.weather.[0].main);
+          setMainWeather(response.data.weather.[0].main);
+        })
+        .catch(function (error) {
+          console.log("OMG error at axios");
+          console.log(error);
+        })
+    })();
   }, [location]);
 
   /*  */
