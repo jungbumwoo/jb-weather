@@ -4,15 +4,18 @@ import { Platform, Text, View, StyleSheet } from "react-native";
 import * as Location from 'expo-location';
 import axios from "axios";
 
+import getEnvVars from "./environment.js"; // .gitignore
+const { apiUrl } = getEnvVars();
+
+/*
 import Loading from "./Loading";
-
-
-
-const API_KEY = "";
+*/
 
 export default function App() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [mainWeather, setMainWeather] = useState(null);
+  const [results, setResults] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -21,10 +24,8 @@ export default function App() {
         setErrorMsg('Permission to access location was denied');
         return;
       }
-
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-     
     })();
   }, []);
 
@@ -33,10 +34,9 @@ export default function App() {
       let lat = location.coords.latitude;
       let lon = location.coords.longitude;
       (async () => {
-        let resultAxios = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`)
+        let resultAxios = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiUrl}`)
           .then(function (response) {
             const { data : { weather }} = response;
-            
             console.log("main weather!!:");
             console.log(response.data.weather.[0].main);
           })
@@ -44,10 +44,18 @@ export default function App() {
             console.log("OMG error at axios");
             console.log(error);
           })
-  
       })();
     }
+    let getWeather = [];
+    if (results) {
+      getWeather = response.data.weather.[0].main;
+    } else {
+      console.log("response is not exist");
+    }
+    setMainWeather(getWeather);
   }, [location]);
+
+  /*  */
 
   let text = 'Waiting..';
   if (errorMsg) {
@@ -55,10 +63,14 @@ export default function App() {
   } else if (location) {
     text = JSON.stringify(location);
   }
+  
+  let _mainWeather = [];
+  _mainWeather = mainWeather;
 
   return (
     <View style={styles.container}>
       <Text style={styles.paragraph}>{text}</Text>
+      <Text style={styles.paragraph}>{_mainWeather}</Text>
     </View>
   );
 }
