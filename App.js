@@ -7,15 +7,15 @@ import axios from "axios";
 import getEnvVars from "./environment.js"; // .gitignore
 import Loading from './Loading.js';
 const { apiUrl } = getEnvVars(); // .gitignore
-/*
-import Loading from "./Loading";
-*/
+
+
 export default function App() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [mainWeather, setMainWeather] = useState("");
   const [lat, setLat] = useState("");
   const [lon, setLon] = useState("");
+  const [mainWeather, setMainWeather] = useState("");
+  const [temp, setTemp] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -31,6 +31,7 @@ export default function App() {
         setLat(location.coords.latitude);
         setLon(location.coords.longitude);
       } catch(err) {
+        console.log("first useEffect Err");
         console.log(err);
       }
     })();
@@ -40,33 +41,22 @@ export default function App() {
     (async () => {
       try {
         console.log("*second useEffect()*");
-      let { data: { weather }} = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiUrl}&units=metric`)
+      let { data } = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiUrl}&units=metric`)
       let getWeather = "";
-      getWeather = weather.[0].main
+      getWeather = data.weather.[0].main
       setMainWeather(getWeather);
+      let getTemp = "";
+      getTemp = data.main.temp;
+      setTemp(getTemp);
       } catch(error) {
+        console.log("second useEffect Err");
         console.log(error);
       }
     })();
     
-  }, [location]);
+  }, [lat, lon]);
 
-  /*  */
-  /*
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
-  
-
-  let _mainWeather = "";
-  _mainWeather = mainWeather;
-  console.log("mainWeather");
-  console.log(_mainWeather);
-  */
-  if (mainWeather == undefined) {
+  if (mainWeather == "") {
     return (
       <Loading />
     )
@@ -74,6 +64,7 @@ export default function App() {
     return (
       <View style={styles.container}>
         <Text style={styles.paragraph}>{mainWeather}</Text>
+        <Text style={styles.paragraph}>{temp}</Text>
       </View>
     );
   }
@@ -92,29 +83,3 @@ const styles = StyleSheet.create({
     backgroundColor: "yellow"
   }
 })
-
-/*
-useEffect(() => {
-    (async () => {
-      try {
-        console.log("*second useEffect()*");
-      let resultAxios = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiUrl}&units=metric`)
-        .then(function (response) {
-          console.log("response");
-          console.log(response);
-          const { data : { weather }} = response;
-          console.log("main weather!!:");
-          console.log(response.data.weather.[0].main);
-        })
-        .catch(function (error) {
-          console.log("OMG error at axios");
-          console.log(error);
-        })
-        setMainWeather(response.data.weather.[0].main);
-      } catch(error) {
-        console.log(error);
-      }
-    })();
-    
-  }, [location]);
-*/
