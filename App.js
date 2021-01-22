@@ -6,6 +6,7 @@ import axios from "axios";
 
 import getEnvVars from "./environment.js"; // .gitignore
 import Loading from './Loading.js';
+import Weather from "./Weather";
 const { apiUrl } = getEnvVars(); // .gitignore
 
 
@@ -63,9 +64,10 @@ export default function App() {
   } else {
     return (
       <View style={styles.container}>
-        <Text style={styles.paragraph}>{mainWeather}</Text>
-        <Text style={styles.paragraph}>{temp}</Text>
+        <Weather weather={mainWeather}
+          temp={temp} />  
       </View>
+      
     );
   }
 }
