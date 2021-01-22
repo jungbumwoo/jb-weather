@@ -44,7 +44,7 @@ export default function App() {
         console.log("*second useEffect()*");
       let { data } = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiUrl}&units=metric`)
       let getWeather = "";
-      getWeather = data.weather.[0].main
+      getWeather = data.weather.[0].main;
       setMainWeather(getWeather);
       let getTemp = "";
       getTemp = data.main.temp;
@@ -63,25 +63,14 @@ export default function App() {
     )
   } else {
     return (
-      <View style={styles.container}>
         <Weather weather={mainWeather}
-          temp={temp} />  
-      </View>
-      
+          temp={temp} />
     );
   }
-}
+};
 
 const styles = StyleSheet.create({
   container:{
-    flex: 1,
-    backgroundColor: "blue",
-    justifyContent: "flex-end",
-    paddingHorizontal: 30,
-    paddingVertical: 100
-  },
-  paragraph: {
-    flex: 1,
-    backgroundColor: "yellow"
+    
   }
-})
+});
