@@ -54,7 +54,6 @@ export default function App() {
         console.log(error);
       }
     })();
-    
   }, [lat, lon]);
 
   if (mainWeather == "") {
