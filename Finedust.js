@@ -12,7 +12,8 @@ function Finedust(){
     useEffect(()=> {
         (async () => {
             try {
-                let {data} = axios.get(`http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?sidoName=서울&pageNo=1&numOfRows=10&ServiceKey=서비스키&ver=1.3`);
+                let result = await axios.get(`http://openapi.airkorea.or.kr/openapi/services/rest/MsrstnInfoInqireSvc/getNearbyMsrstnList?tmX=244148.546388&tmY=412423.75772&ServiceKey=vOFj8QWIbDJaRwHIDGBw7pQcsm5m2GdxPz4WY78DVxTRsmf7QJpat5SqxNrvBo3qKJLNDFvnIMZWoodNlEkV4w%3D%3D`);
+                console.log(result);
             } catch {
 
             }
@@ -21,7 +22,7 @@ function Finedust(){
 
     return (
         <View>
-
+            <Text>abcd</Text>
         </View>
     )
 }

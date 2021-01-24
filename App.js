@@ -7,6 +7,7 @@ import axios from "axios";
 import getEnvVars from "./environment.js"; // .gitignore
 import Loading from './Loading.js';
 import Weather from "./Weather";
+import Finedust from './Finedust.js';
 const { apiUrl } = getEnvVars(); // .gitignore
 
 
@@ -45,7 +46,7 @@ export default function App() {
         console.log("*second useEffect()*");
       let { data } = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiUrl}&units=metric`)
       let getWeather = "";
-      getWeather = data.weather.[0].main;
+      getWeather = data.weather[0].main;
       setMainWeather(getWeather);
       let getTemp = "";
       getTemp = data.main.temp;
@@ -63,14 +64,11 @@ export default function App() {
     )
   } else {
     return (
-        <Weather weather={mainWeather}
+        <View>
+          <Weather weather={mainWeather}
           temp={temp} />
+        </View>
     );
   }
 };
 
-const styles = StyleSheet.create({
-  container:{
-    
-  }
-});

@@ -6,10 +6,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 function Weather({weather, temp}) {
+    console.log("weather");
+    console.log(weatherList[weather]);
     return(
         <View style={styles.container}>
             <StatusBar barStyle="light-content" />
-            <LinearGradient style={styles.gradientBackground} colors={weatherList[weather].colors}>
+            <LinearGradient style={styles.gradientBackground} colors={["#7B7470", "#748684"]}>
                 <View style={styles.littleContainer}>
                     <MaterialCommunityIcons name={weatherList[weather].icon} size={120} color="white" />
                     <Text style={styles.titleWeather}>{weather}</Text>
@@ -59,56 +61,56 @@ const styles = StyleSheet.create({
 });
 
 
-let weatherList = {
+const weatherList = {
     Mist: {
         description: "Mist",
         icon: "weather-fog",
-        colors: ["#7B7470", "#748684"]
+        gradient: ["#373B44", "#4286f4"]
     },
     Smoke: {
         description: "Smoke",
         icon: "smog",
-        colors: ["#7B7470", "#748684"]
+        gradient: ["#373B44", "#4286f4"]
     },
     Haze: {
         description: "Haze",
         icon: "weather-fog",
-        colors: ["#7B7470", "#748684"]
+        gradient: ["#373B44", "#4286f4"]
     },
     Dust: {
         description: "Sand / dust whirls",
         icon: "smog",
-        colors: ["#5D5D5D", "#DDBA4F"]
+        gradient: ["#373B44", "#4286f4"]
     },
     Fog: {
         description: "Fog",
         icon: "weather-fog",
-        colors: ["#7B7470", "#748684"]
+        gradient: ["#373B44", "#4286f4"]
     },
     Sand: {
         description: "Sand",
         icon: "smog",
-        colors: ["#7B7470", "#748684"]
+        gradient: ["#373B44", "#4286f4"]
     },
     Dust: {
         description: "Dust",
         icon: "smog",
-        colors: ["#7B7470", "#748684"]
+        gradient: ["#373B44", "#4286f4"]
     },
     Ash: {
         description: "Ash",
         icon: "smog",
-        colors: ["#7B7470", "#748684"]
+        gradient: ["#373B44", "#4286f4"]
     },
     Squall:{
         description: "Squll",
         icon: "weather-windy",
-        colors: ["#7B7470", "#748684"]
+        gradient: ["#373B44", "#4286f4"]
     },
     Tornado:{
         description: "Tornado",
         icon: "weather-tornado",
-        colors: ["#7B7470", "#748684"]
+        gradient: ["#373B44", "#4286f4"]
     }
 }
 
