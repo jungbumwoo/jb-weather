@@ -17,6 +17,7 @@ export default function App() {
   const [lon, setLon] = useState("");
   const [mainWeather, setMainWeather] = useState("");
   const [temp, setTemp] = useState("");
+  
 
   useEffect(() => {
     (async () => {
