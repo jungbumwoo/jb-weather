@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import getEnvVars from "./environment.js";
-const { dustApiUrl } = getEnvVars();
+const { airKoreaApi } = getEnvVars();
 
 
 function Finedust(){
@@ -10,15 +10,20 @@ function Finedust(){
     const [mstation, setMstation] = useState("종로구");
 
     useEffect(()=> {
+        console.log("FineDust useEffect");
         (async () => {
+            // Why FineDust async Function doesn't work?
+            console.log("Why FineDust async Function doesn't work?");
             try {
-                let result = await axios.get(`http://openapi.airkorea.or.kr/openapi/services/rest/MsrstnInfoInqireSvc/getNearbyMsrstnList?tmX=244148.546388&tmY=412423.75772&ServiceKey=vOFj8QWIbDJaRwHIDGBw7pQcsm5m2GdxPz4WY78DVxTRsmf7QJpat5SqxNrvBo3qKJLNDFvnIMZWoodNlEkV4w%3D%3D`);
+                let result = await axios.get(`http://openapi.airkorea.or.kr/openapi/services/rest/MsrstnInfoInqireSvc/getNearbyMsrstnList?tmX=244148.546388&tmY=412423.75772&ServiceKey=${airKoreaApi}`);
+                console.log("fineDust results");
                 console.log(result);
-            } catch {
-
+            } catch(err) {
+                console.log("Finedust async err");
+                console.log(err);
             }
         })
-    }, [mstation])
+    })
 
     return (
         <View>

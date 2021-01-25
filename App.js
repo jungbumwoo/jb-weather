@@ -52,8 +52,7 @@ export default function App() {
       getTemp = data.main.temp;
       setTemp(getTemp);
       } catch(error) {
-        console.log("second useEffect Err");
-        console.log(error);
+        console.log("second useEffect Err at App.js");
       }
     })();
   }, [lat, lon]);
@@ -64,11 +63,18 @@ export default function App() {
     )
   } else {
     return (
-        
-          <Weather weather={mainWeather}
+      <View style={styles.container}>
+        <Weather weather={mainWeather}
           temp={temp} />
+        <Finedust />
+      </View>
        
     );
   }
 };
 
+const styles = StyleSheet.create({
+  container:{
+      flex: 1
+  }
+});
