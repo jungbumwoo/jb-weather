@@ -66,7 +66,7 @@ export default function App() {
       <View style={styles.container}>
         <Weather weather={mainWeather}
           temp={temp} />
-        <Finedust />
+        <Finedust lat={lat} lon={lon} />
       </View>
        
     );
