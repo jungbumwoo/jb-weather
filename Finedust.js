@@ -22,7 +22,7 @@ function Finedust(){
                 console.log("Finedust async err");
                 console.log(err);
             }
-        })
+        })();
     })
 
     return (
