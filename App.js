@@ -64,10 +64,10 @@ export default function App() {
     )
   } else {
     return (
-        <View>
+        
           <Weather weather={mainWeather}
           temp={temp} />
-        </View>
+       
     );
   }
 };

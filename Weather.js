@@ -6,12 +6,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 function Weather({weather, temp}) {
-    console.log("weather");
-    console.log(weatherList[weather]);
     return(
         <View style={styles.container}>
             <StatusBar barStyle="light-content" />
-            <LinearGradient style={styles.gradientBackground} colors={["#7B7470", "#748684"]}>
+            <LinearGradient style={styles.gradientBackground} colors={weatherList[weather].gradient}>
                 <View style={styles.littleContainer}>
                     <MaterialCommunityIcons name={weatherList[weather].icon} size={120} color="white" />
                     <Text style={styles.titleWeather}>{weather}</Text>
@@ -110,6 +108,16 @@ const weatherList = {
     Tornado:{
         description: "Tornado",
         icon: "weather-tornado",
+        gradient: ["#373B44", "#4286f4"]
+    },
+    Clear: {
+        description: "Clear",
+        icon: "weather-sunny",
+        gradient: ["#373B44", "#4286f4"]
+    },
+    Clouds: {
+        description: "Clouds",
+        icon: "weather-cloudy",
         gradient: ["#373B44", "#4286f4"]
     }
 }
