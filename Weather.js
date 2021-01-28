@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 function Weather({weather, temp}) {
+    console.log(weather);
     return(
         <View style={styles.container}>
             <StatusBar barStyle="light-content" />
@@ -59,6 +60,26 @@ const styles = StyleSheet.create({
 
 
 const weatherList = {
+    Thunderstorm: {
+        description: "Clouds",
+        icon: "weather-cloudy",
+        gradient: ["#373B44", "#4286f4"]
+    },
+    Drizzle: {
+        description: "Clouds",
+        icon: "weather-cloudy",
+        gradient: ["#373B44", "#4286f4"]
+    },
+    Snow: {
+        description: "Clouds",
+        icon: "weather-cloudy",
+        gradient: ["#373B44", "#4286f4"]
+    },
+    Rain: {
+        description: "Clouds",
+        icon: "weather-cloudy",
+        gradient: ["#373B44", "#4286f4"]
+    },
     Mist: {
         description: "Mist",
         icon: "weather-fog",

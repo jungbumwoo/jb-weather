@@ -33,6 +33,8 @@ export default function App() {
         setLocation(location);
         setLat(location.coords.latitude);
         setLon(location.coords.longitude);
+        console.log(location.coords.latitude);
+        console.log(location.coords.longitude);
       } catch(err) {
         console.log("first useEffect Err");
         console.log(err);
