@@ -8,7 +8,7 @@ import getEnvVars from "./environment.js"; // .gitignore
 import Loading from './Loading.js';
 import Weather from "./Weather";
 import Finedust from './Finedust.js';
-const { apiUrl } = getEnvVars(); // .gitignore
+const { OPENWEATHER_API } = getEnvVars(); // .gitignore
 
 
 export default function App() {
@@ -16,7 +16,9 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [lat, setLat] = useState("");
   const [lon, setLon] = useState("");
+  const [city, setCity] = useState("");
   const [mainWeather, setMainWeather] = useState("");
+  const [wDescription, setWDescription ] = useState("");
   const [temp, setTemp] = useState("");
   
 
@@ -33,8 +35,6 @@ export default function App() {
         setLocation(location);
         setLat(location.coords.latitude);
         setLon(location.coords.longitude);
-        console.log(location.coords.latitude);
-        console.log(location.coords.longitude);
       } catch(err) {
         console.log("first useEffect Err");
         console.log(err);
@@ -46,10 +46,18 @@ export default function App() {
     (async () => {
       try {
         console.log("*second useEffect()*");
-      let { data } = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiUrl}&units=metric`)
+      let { data } = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${OPENWEATHER_API}&units=metric`)
+      console.log("data.name");
+      console.log(data.name);
       let getWeather = "";
+      let getDescription = "";
+      let getCity = "";
       getWeather = data.weather[0].main;
+      getDescription = data.weather[0].description;
+      getCity = data.name;
       setMainWeather(getWeather);
+      setWDescription(getDescription);
+      setCity(getCity);
       let getTemp = "";
       getTemp = data.main.temp;
       setTemp(getTemp);
@@ -67,6 +75,8 @@ export default function App() {
     return (
       <View style={styles.container}>
         <Weather weather={mainWeather}
+          wDescription={wDescription}
+          city={city}
           temp={temp} />
         <Finedust lat={lat} lon={lon} />
       </View>

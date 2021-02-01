@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 
-function Weather({weather, temp}) {
+function Weather({weather, wDescription, city, temp}) {
     console.log(weather);
     return(
         <View style={styles.container}>
@@ -14,9 +14,11 @@ function Weather({weather, temp}) {
                 <View style={styles.littleContainer}>
                     <MaterialCommunityIcons name={weatherList[weather].icon} size={120} color="white" />
                     <Text style={styles.titleWeather}>{weather}</Text>
+                    <Text style={styles.descriptionWeater}>{wDescription}</Text>
                 </View>
                 <View style={styles.littleContainer}>
                     <Text style={styles.temp}>{temp}°C</Text>
+                    <Text style={styles.city}>{city}</Text>
                 </View>
             </LinearGradient>
         </View>
@@ -51,10 +53,21 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         marginTop: 10
     },
+    descriptionWeater: {
+        color: "white",
+        fontSize: 12,
+        fontWeight: "300",
+        marginTop: 15
+    },
+    city: {
+        color: "white",
+        marginTop: 80
+    },
     temp: {
         color: "white",
         fontSize: 28,
-        fontWeight: "400"
+        fontWeight: "400",
+        marginTop: 30
     }
 });
 
@@ -93,7 +106,7 @@ const weatherList = {
     Haze: {
         description: "Haze",
         icon: "weather-fog",
-        gradient: ["#373B44", "#4286f4"]
+        gradient: ["#779D84", "#5486BB"]
     },
     Dust: {
         description: "Sand / dust whirls",

@@ -15,10 +15,10 @@ function Finedust({ lat, lon}){
     useEffect(() => {
         (async () => {
             try {
-                let result = await axios.get(`https://dapi.kakao.com/v2/local/geo/transcoord.json?x=37.37340751&y=127.13659424&output_coord=WTM`, {
+                let result = await axios.get(`http://openapi.airkorea.or.kr/openapi/services/rest/MsrstnInfoInqireSvc/getTMStdrCrdnt?umdName=혜화동&pageNo=1&numOfRows=10&ServiceKey=${airKoreaApi}`, {
                     headers: {
-                        'Authorization': `${KAKAO_RESTAPI_KEY}`
-                    }   
+                        'Access-Control-Allow-Origin': '*'
+                    }
                 })
                 console.log(result);
                 //37.37340751 127.13659424
