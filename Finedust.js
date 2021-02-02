@@ -50,17 +50,39 @@ function Finedust({ lat, lon}){
                 let stationData = await axios.get(`http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?stationName=${mstation}&dataTerm=DAILY&pageNo=1&numOfRows=10&ServiceKey=${airKoreaApi}&ver=1.3&_returnType=json`)
                 let airCondition = stationData.data.list[0];
                 console.log(airCondition);
+                let pm10V, pm10G, pm25V, pm25G = null;
+                pm10V = airCondition.pm10Value;
+                pm10G = airCondition.pm10Grade;
+                pm25V = airCondition.pm25Value;
+                pm25G = airCondition.pm25Grade;
+                setPm10Grade(pm10G);
+                setPm10Value(pm10V);
+                setPm25Grade(pm25G);
+                setPm25Value(pm25V);
+                
             } catch(err) {
                 console.log("ERROR Findust.js ");
                 console.log(err)
             };
         })();
     }, [])
-    return (
-        <View>
-            <Text>abcd</Text>
-        </View>
-    )
+    
+    if (pm10Grade && pm10Value && pm25Grade && pm25Value) {
+        return (
+            <View>
+                <Text>{pm10Value}</Text>
+                <Text>{pm10Grade}</Text>
+                <Text>{pm25Value}</Text>
+                <Text>{pm25Grade}</Text>
+            </View>
+        )
+    } else {
+        return (
+            <View>
+                <Text>Loading..</Text>
+            </View>
+        )
+    }
 }
 
 export default Finedust;
