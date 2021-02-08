@@ -8,8 +8,10 @@ const { airKoreaApi, NAVER_CLIENT_ID ,NAVER_CLIENT_SECRET, OPENCASE_KEY } = getE
 function Finedust({ lat, lon}){
     const [pm10Value, setPm10Value] = useState(null);
     const [pm25Value, setPm25Value] = useState(null);
-    const [pm10Grade, setPm10Grade] = useState(null);
-    const [pm25Grade, setPm25Grade] = useState(null);
+    const [pm10Num, setPm10Num] = useState(null);
+    const [pm25Num, setPm25Num] = useState(null);
+    const [pm10State, setPm10State] = useState("");
+    const [pm25State, setPm25State] = useState("");
 
     useEffect(() => {
         (async () => {
@@ -49,16 +51,35 @@ function Finedust({ lat, lon}){
                 // 가장 가까운 측정소의 대기정보 데이터를 받아옴.
                 let stationData = await axios.get(`http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?stationName=${mstation}&dataTerm=DAILY&pageNo=1&numOfRows=10&ServiceKey=${airKoreaApi}&ver=1.3&_returnType=json`)
                 let airCondition = stationData.data.list[0];
-                console.log(airCondition);
-                let pm10V, pm10G, pm25V, pm25G = null;
+                let pm10V, pm10G, pm25V, pm25G, pm10S, pm25S = null;
                 pm10V = airCondition.pm10Value;
                 pm10G = airCondition.pm10Grade;
                 pm25V = airCondition.pm25Value;
                 pm25G = airCondition.pm25Grade;
-                setPm10Grade(pm10G);
+
+                if (pm10G == 1) {
+                    pm10S = "Good!"
+                } else if (pm10G == 2) {
+                    pm10S = "Nomal"
+                } else if (pm10G == 3) {
+                    pm10S = "Bad"
+                } else {
+                    pm10S = "Very Bad"
+                }
+
+                if (pm25G == 1) {
+                    pm25S = "Good!"
+                } else if (pm25G == 2) {
+                    pm25S = "Nomal"
+                } else if (pm25G == 3) {
+                    pm25S = "Bad"
+                } else {
+                    pm25S = "Very Bad"
+                }
                 setPm10Value(pm10V);
-                setPm25Grade(pm25G);
                 setPm25Value(pm25V);
+                setPm10State(pm10S);
+                setPm25State(pm25S);
                 
             } catch(err) {
                 console.log("ERROR Findust.js ");
@@ -66,14 +87,14 @@ function Finedust({ lat, lon}){
             };
         })();
     }, [])
-    
-    if (pm10Grade && pm10Value && pm25Grade && pm25Value) {
+
+    if (pm10Value && pm25Value) {
         return (
-            <View>
+            <View style={styles.container}>
                 <Text>{pm10Value}</Text>
-                <Text>{pm10Grade}</Text>
+                <Text>{pm10State}</Text>
                 <Text>{pm25Value}</Text>
-                <Text>{pm25Grade}</Text>
+                <Text>{pm25State}</Text>
             </View>
         )
     } else {
@@ -84,5 +105,11 @@ function Finedust({ lat, lon}){
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex: 3
+    }
+});
 
 export default Finedust;

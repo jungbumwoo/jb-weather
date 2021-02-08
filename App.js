@@ -8,6 +8,7 @@ import getEnvVars from "./environment.js"; // .gitignore
 import Loading from './Loading.js';
 import Weather from "./Weather";
 import Finedust from './Finedust.js';
+import Quotes from './Container/Quotes.js';
 const { OPENWEATHER_API } = getEnvVars(); // .gitignore
 
 
@@ -79,6 +80,7 @@ export default function App() {
           city={city}
           temp={temp} />
         <Finedust lat={lat} lon={lon} />
+        <Quotes />
       </View>
        
     );

@@ -35,7 +35,7 @@ Weather.propTypes = {
 
 const styles = StyleSheet.create({
     container:{
-        flex: 1
+        flex: 7
     },
     gradientBackground: {
         flex:1,
