@@ -25,18 +25,13 @@ const Quotes = (props) => {
     }, [])
 
     return(
-        <View style={styles.container}>
+        <View>
             <Text>{sentense}</Text>
             <Text>{author}</Text>
         </View>
     )
 }
 
-const styles = StyleSheet.create({
-    container:{
-        flex: 3
-    }
-});
 
 
 export default Quotes

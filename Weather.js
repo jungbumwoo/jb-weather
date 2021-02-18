@@ -2,11 +2,12 @@ import React from "react";
 import { StatusBar, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { LinearGradient } from 'expo-linear-gradient';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Quotes from './Container/Quotes.js';
+import Finedust from "./Finedust";
 
 
-function Weather({weather, wDescription, city, temp}) {
-    console.log(weather);
+function Weather({weather, wDescription, city, temp, lat, lon}) {
     return(
         <View style={styles.container}>
             <StatusBar barStyle="light-content" />
@@ -15,6 +16,12 @@ function Weather({weather, wDescription, city, temp}) {
                     <MaterialCommunityIcons name={weatherList[weather].icon} size={120} color="white" />
                     <Text style={styles.titleWeather}>{weather}</Text>
                     <Text style={styles.descriptionWeater}>{wDescription}</Text>
+                </View>
+                <View>
+                    <Quotes />
+                </View>
+                <View>
+                    <Finedust lat={lat} lon={lon} />
                 </View>
                 <View style={styles.littleContainer}>
                     <Text style={styles.temp}>{temp}°C</Text>
@@ -35,7 +42,7 @@ Weather.propTypes = {
 
 const styles = StyleSheet.create({
     container:{
-        flex: 7
+        flex: 1
     },
     gradientBackground: {
         flex:1,
