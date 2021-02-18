@@ -1,11 +1,12 @@
 import axios from "axios";
+import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import getEnvVars from "./environment.js";
 const { airKoreaApi, NAVER_CLIENT_ID ,NAVER_CLIENT_SECRET, OPENCASE_KEY } = getEnvVars();
 
 
-function Finedust({ lat, lon}){
+function Finedust({ lat, lon, gradientColor}){
     const [pm10Value, setPm10Value] = useState(null);
     const [pm25Value, setPm25Value] = useState(null);
     const [pm10Num, setPm10Num] = useState(null);
@@ -62,10 +63,10 @@ function Finedust({ lat, lon}){
 
                 if (pm10G == 1) {
                     pm10S = "Good";
-                    pm10Color = "#5ee2ff"
+                    pm10Color = "rgba(27, 158, 230, 1.0)"
                 } else if (pm10G == 2) {
                     pm10S = "Nomal";
-                    pm10Color = "#47e823"
+                    pm10Color = "#F0D23E"
                 } else if (pm10G == 3) {
                     pm10S = "Bad";
                     pm10Color = "#e87523"
@@ -76,10 +77,10 @@ function Finedust({ lat, lon}){
 
                 if (pm25G == 1) {
                     pm25S = "Good";
-                    pm25Color = "#5ee2ff"
+                    pm25Color = "rgba(27, 158, 230, 1.0)"
                 } else if (pm25G == 2) {
                     pm25S = "Nomal";
-                    pm25Color = "#47e823"
+                    pm25Color = "#ffff00"
                 } else if (pm25G == 3) {
                     pm25S = "Bad"
                     pm25Color = "#e87523"
@@ -102,19 +103,22 @@ function Finedust({ lat, lon}){
     }, [])
 
     if (pm10Value && pm25Value) {
-        console.log(pm10Color)
         return (
             <View style={styles.finedustView}>
-                <View>
-                    <Text style={{color: `${pm10Color}`}}>{pm10Value}</Text>
-                    <Text style={[{color: `${pm10Color}`}]}>{pm10State}</Text>
-                    <Text>미세먼지</Text>
-                </View>
-                <View>
-                    <Text style={styles.finedust}>{pm25Value}</Text>
-                    <Text style={[styles.finedust, {color: `${pm10Color}`}]}>{pm25State}</Text>
-                    <Text>초미세먼지</Text>
-                </View>
+                <LinearGradient style={styles.fineBoxGradient} start={{x: 1, y: 1}} end={{x: 0, y: 0}} colors={gradientColor}   >
+                    <View style={[styles.finedustBox]}>
+                        <Text style={[styles.finedust, {color: `${pm10Color}`}]}>{pm10Value}</Text>
+                        <Text style={[styles.finedust, {color: `${pm10Color}`}]}>{pm10State}</Text>
+                        <Text style={{color:`${gradientColor[1]}`, fontSize: 11, marginTop: 5}}>미세먼지</Text>
+                    </View>
+                </LinearGradient>
+                <LinearGradient style={styles.fineBoxGradient} start={{x: 1, y: 1}} end={{x: 0, y: 0}} colors={gradientColor}   >
+                    <View style={[styles.finedustBox]}>
+                        <Text style={[styles.finedust, {color: `${pm25Color}`}]}>{pm25Value}</Text>
+                        <Text style={[styles.finedust, {color: `${pm25Color}`}]}>{pm25State}</Text>
+                        <Text style={{color:`${gradientColor[1]}`, fontSize: 11, marginTop: 5}}>초미세먼지</Text>
+                    </View>
+                </LinearGradient>
             </View>
         )
     } else {
@@ -128,10 +132,29 @@ function Finedust({ lat, lon}){
 
 const styles = StyleSheet.create({
     finedustView: {
-        fontSize: 50
+        width: 300,
+        height: 130,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignContent: 'space-around', 
+    },
+    finedustBox: {
+        width: 110,
+        height: 110,
+        borderRadius: 55,
+        backgroundColor: "#f5f5f5",
+        justifyContent: "center",
+        alignItems: "center",
     },
     finedust: {
-        fontSize: 25
+        fontSize: 20
+    },
+    fineBoxGradient: {
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+        justifyContent: "center",
+        alignItems: "center",
     }
 })
 

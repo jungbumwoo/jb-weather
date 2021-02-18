@@ -48,8 +48,6 @@ export default function App() {
       try {
         console.log("*second useEffect()*");
       let { data } = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${OPENWEATHER_API}&units=metric`)
-      console.log("data.name");
-      console.log(data.name);
       let getWeather = "";
       let getDescription = "";
       let getCity = "";

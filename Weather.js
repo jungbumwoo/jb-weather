@@ -17,13 +17,13 @@ function Weather({weather, wDescription, city, temp, lat, lon}) {
                     <Text style={styles.titleWeather}>{weather}</Text>
                     <Text style={styles.descriptionWeater}>{wDescription}</Text>
                 </View>
-                <View>
+                <View style={{flex: 2}}>
                     <Quotes />
                 </View>
-                <View>
-                    <Finedust lat={lat} lon={lon} />
+                <View style={{flex: 1.5}}>
+                    <Finedust lat={lat} lon={lon} gradientColor={weatherList[weather].gradient} />
                 </View>
-                <View style={styles.littleContainer}>
+                <View style={[styles.littleContainer, {flex: 2}]}>
                     <Text style={styles.temp}>{temp}°C</Text>
                     <Text style={styles.city}>{city}</Text>
                 </View>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     littleContainer: {
-        flex:1,
+        flex:3,
         alignItems: "center",
         justifyContent: "center"
     },
@@ -66,16 +66,15 @@ const styles = StyleSheet.create({
         fontWeight: "300",
         marginTop: 15
     },
-    city: {
-        color: "white",
-        marginTop: 80
-    },
     temp: {
         color: "white",
         fontSize: 28,
         fontWeight: "400",
+    },
+    city: {
+        color: "white",
         marginTop: 30
-    }
+    },
 });
 
 
@@ -83,42 +82,38 @@ const weatherList = {
     Thunderstorm: {
         description: "Clouds",
         icon: "weather-cloudy",
-        gradient: ["#373B44", "#4286f4"]
+        gradient: ["#E1E29B", "#0A3CF5"]
     },
+    // 이슬비 
     Drizzle: {
         description: "Clouds",
         icon: "weather-cloudy",
-        gradient: ["#373B44", "#4286f4"]
+        gradient: ["#94AACA", "#7A9FC0"]
     },
     Snow: {
         description: "Clouds",
         icon: "weather-cloudy",
-        gradient: ["#373B44", "#4286f4"]
+        gradient: ["#EFF8F6", "#9CA9DA"]
     },
     Rain: {
         description: "Clouds",
         icon: "weather-cloudy",
-        gradient: ["#373B44", "#4286f4"]
+        gradient: ["#0E3873", "#7AB0C0"]
     },
     Mist: {
         description: "Mist",
         icon: "weather-fog",
-        gradient: ["#373B44", "#4286f4"]
+        gradient: ["#568B8A", "#C0C0C0"]
     },
     Smoke: {
         description: "Smoke",
         icon: "smog",
-        gradient: ["#373B44", "#4286f4"]
+        gradient: ["#C4C4C4", "#385B66"]
     },
     Haze: {
         description: "Haze",
         icon: "weather-fog",
-        gradient: ["#779D84", "#5486BB"]
-    },
-    Dust: {
-        description: "Sand / dust whirls",
-        icon: "smog",
-        gradient: ["#373B44", "#4286f4"]
+        gradient: ["#A0BABA", "#A29171"]
     },
     Fog: {
         description: "Fog",
@@ -133,7 +128,7 @@ const weatherList = {
     Dust: {
         description: "Dust",
         icon: "smog",
-        gradient: ["#373B44", "#4286f4"]
+        gradient: ["#7CC3C3", "#A29171"]
     },
     Ash: {
         description: "Ash",
@@ -143,23 +138,25 @@ const weatherList = {
     Squall:{
         description: "Squll",
         icon: "weather-windy",
-        gradient: ["#373B44", "#4286f4"]
+        gradient: ["#FFDAC8", "#4265E5"]
     },
     Tornado:{
         description: "Tornado",
         icon: "weather-tornado",
-        gradient: ["#373B44", "#4286f4"]
+        gradient: ["#451661", "#01536D"]
     },
     Clear: {
         description: "Clear",
         icon: "weather-sunny",
-        gradient: ["#373B44", "#4286f4"]
+        //gradient: ['rgba(154, 158, 116, 1.0)', 'rgba(27, 158, 230, 1.0)']
+        gradient: ['#5F91EC', '#A5D8A8']
     },
     Clouds: {
         description: "Clouds",
         icon: "weather-cloudy",
-        gradient: ["#373B44", "#4286f4"]
+        gradient: ["#B6B8AC", "#98A8E0"]
     }
 }
 
 export default Weather;
+

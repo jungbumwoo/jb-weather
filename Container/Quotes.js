@@ -25,13 +25,32 @@ const Quotes = (props) => {
     }, [])
 
     return(
-        <View>
-            <Text>{sentense}</Text>
-            <Text>{author}</Text>
+        <View style={styles.quoteView}>
+            <Text style={styles.quoteSentense}>{sentense}</Text>
+            <Text style={styles.quoteAuthor}> - {author}</Text>
         </View>
     )
 }
 
-
+const styles = StyleSheet.create({
+    quoteView: {
+        width: 340,
+        height: 160,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    quoteSentense: {
+        color: "white",
+        fontSize: 17,
+        fontWeight: "600",
+        textAlign: "center",
+    },
+    quoteAuthor: {
+        color: "white",
+        fontSize: 13,
+        marginTop: 10,
+        fontWeight: '400'
+    }
+})
 
 export default Quotes
